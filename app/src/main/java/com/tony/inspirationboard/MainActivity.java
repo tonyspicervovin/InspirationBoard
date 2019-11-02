@@ -1,22 +1,32 @@
 package com.tony.inspirationboard;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
 
-    private RecyclerView mInspirationBoardRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
-    private Button mAddImageNote;
-    private Button mAddTextNote;
-    private EditText mSearchNotes;
+    @Override
+    public void onFragmentInteraction(Uri uri){
 
+    }
+    private String TAG = "MAIN_ACTIVITY";
+
+    private NoteFragment noteFragment;
+    private MainFragment mainFragment;
+
+    private ImageButton addNote;
+    private ImageButton addImageNote;
+
+    public MainActivity(){
+        //required empty constructer
+    }
 
 
     @Override
@@ -24,6 +34,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        addImageNote = findViewById(R.id.addImageNote);
+        addNote = findViewById(R.id.addNote);
+
+
+
+        noteFragment = new NoteFragment();
+        mainFragment = new MainFragment();
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.fragment_container, mainFragment);
+        ft.commit();
+
+        View mainView = findViewById(android.R.id.content);
+
+
+
+
+
+
+
+
 
     }
+
+
 }

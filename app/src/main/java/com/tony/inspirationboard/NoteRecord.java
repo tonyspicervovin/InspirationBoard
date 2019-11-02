@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 
 @Entity
 public class NoteRecord {
@@ -14,13 +13,13 @@ public class NoteRecord {
 
     private String content;
 
-    private Date date;
 
 
-    public NoteRecord(@NonNull String title, String content, Date date) {
+
+    public NoteRecord(@NonNull String title, String content) {
         this.title = title;
         this.content = content;
-        this.date = date;
+
     }
 
     @NonNull
@@ -40,20 +39,13 @@ public class NoteRecord {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
         return "NoteRecord{" +
                 "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
-                '}';
+                ", content='" + content
+               ;
     }
 }
