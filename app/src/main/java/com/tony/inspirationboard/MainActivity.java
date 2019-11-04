@@ -12,7 +12,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  AddNoteFragment.OnNoteAddedListener {
+public class MainActivity extends AppCompatActivity implements  AddNoteFragment.OnNoteAddedListener, AddImageFragment.OnNoteAddedListener{
 
 
 

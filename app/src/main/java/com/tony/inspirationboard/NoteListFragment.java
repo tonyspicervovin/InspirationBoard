@@ -26,9 +26,11 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
 
 
     private ImageButton addNote;
+    private ImageButton addPicture;
     private InspirationViewModel mInspirationModel;
 
     private static final String TAG = "NOTE_LIST_FRAGMENT";
+
     private List<NoteRecord> mNotes;
     private NoteListAdapter noteListAdapter;
 
@@ -82,6 +84,21 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
         noteListAdapter = new NoteListAdapter(this.getContext(), this);
         noteListAdapter.setNotes(mNotes);
         recyclerView.setAdapter(noteListAdapter);
+
+        addPicture = view.findViewById(R.id.addImageNote);
+
+        addPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddImageFragment addImageFragment = AddImageFragment.newInstance();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment_container, addImageFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+            }
+        });
 
         addNote = view.findViewById(R.id.addNote);
         addNote.setOnClickListener(new View.OnClickListener() {
