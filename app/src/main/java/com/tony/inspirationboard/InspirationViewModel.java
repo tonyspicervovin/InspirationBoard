@@ -32,4 +32,6 @@ public class InspirationViewModel extends AndroidViewModel {
 
     public void update(NoteRecord record) {repository.update(record);}
 
+    public void delete(NoteRecord record) {repository.delete(record);}
+
 }

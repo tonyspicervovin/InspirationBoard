@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".NoteListFragment">
 
 
     <EditText
@@ -21,12 +21,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/note_list"
-        android:layout_width="409dp"
-        android:layout_height="588dp"
+        android:layout_width="277dp"
+        android:layout_height="287dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toTopOf="@+id/addNote"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchNotes"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton

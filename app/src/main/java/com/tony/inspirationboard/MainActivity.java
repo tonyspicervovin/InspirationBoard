@@ -3,26 +3,28 @@ package com.tony.inspirationboard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements  AddNoteFragment.OnNoteAddedListener {
 
 
-    @Override
-    public void onFragmentInteraction(Uri uri){
 
-    }
     private String TAG = "MAIN_ACTIVITY";
+    private static final String TAG_MAIN_FRAGMENT = "NoteListFragment";
+    //tags for logs
 
-    private NoteFragment noteFragment;
-    private MainFragment mainFragment;
 
-    private ImageButton addNote;
-    private ImageButton addImageNote;
+    private NoteListFragment mainFragment;
+    private InspirationViewModel inspirationViewModel;
+
+
 
     public MainActivity(){
         //required empty constructer
@@ -34,28 +36,41 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addImageNote = findViewById(R.id.addImageNote);
-        addNote = findViewById(R.id.addNote);
-
-
-
-        noteFragment = new NoteFragment();
-        mainFragment = new MainFragment();
+        NoteListFragment mainFragment = NoteListFragment.newInstance();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragment_container, mainFragment);
         ft.commit();
-
-        View mainView = findViewById(android.R.id.content);
-
+        //displaying the main fragment initially
 
 
+        InspirationViewModel ivm = new InspirationViewModel(getApplication());
+        LiveData<List<NoteRecord>> noteList = ivm.getAllRecords();
+        noteList.observe(this, new Observer<List<NoteRecord>>() {
+            @Override
+            public void onChanged(List<NoteRecord> noteRecords) {
+                Log.d(TAG, "Note records are: "+noteRecords);
+                //logging notes for debugging purposes
+            }
+        });
+    }
 
+    @Override
+    public void onNoteAdded(NoteRecord noteRecord) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        NoteListFragment mainFragment = (NoteListFragment) fm.findFragmentByTag(TAG_MAIN_FRAGMENT);
+        if (mainFragment != null) {
+            ft.replace(R.id.fragment_container, mainFragment);
+            ft.commit();
+        }else {
+            Log.w(TAG, "Note list fragment not found");
+        }
+    }
 
-
-
-
+    @Override
+    public void requestMakeNewNote() {
 
     }
 

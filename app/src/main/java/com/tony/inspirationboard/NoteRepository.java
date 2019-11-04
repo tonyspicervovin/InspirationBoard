@@ -51,6 +51,21 @@ public class NoteRepository {
             return null;
         }
     }
+
+    public void delete(NoteRecord record) {new DeleteNoteAsync(inspirationDAO).execute(record);}
+
+    static class DeleteNoteAsync extends AsyncTask<NoteRecord, Void, Void> {
+
+        private InspirationDAO inspirationDAO;
+
+        DeleteNoteAsync(InspirationDAO inspirationDAO) {this.inspirationDAO = inspirationDAO; }
+
+        @Override
+        protected Void doInBackground(NoteRecord... noteRecords) {
+            inspirationDAO.delete(noteRecords);
+            return null;
+        }
+    }
     public LiveData<List<NoteRecord>> getAllRecords() {
         return inspirationDAO.getAllNotes();
     }

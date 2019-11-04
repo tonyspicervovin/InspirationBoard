@@ -2,6 +2,7 @@ package com.tony.inspirationboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -17,6 +18,9 @@ public interface InspirationDAO {
 
     @Update
     void update(NoteRecord... nr);
+
+    @Delete
+    void delete(NoteRecord... nr);
 
     @Query("SELECT * FROM NoteRecord WHERE title = :title LIMIT 1")
     LiveData<NoteRecord> getNoteForTitle(String title);
