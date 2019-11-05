@@ -6,13 +6,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  AddNoteFragment.OnNoteAddedListener, AddImageFragment.OnNoteAddedListener{
+public class MainActivity extends AppCompatActivity implements  AddNoteFragment.OnNoteAddedListener, AddImageFragment.OnNoteAddedListener {
 
 
 
