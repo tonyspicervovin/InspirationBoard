@@ -6,9 +6,16 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities =  {NoteRecord.class}, version = 1, exportSchema = false)
+
+@Database(entities =  {NoteRecord.class}, version = 2, exportSchema = false)
 public abstract class NoteDatabase extends RoomDatabase {
+
+
+
+
 
     private static volatile NoteDatabase INSTANCE;
 
@@ -21,7 +28,7 @@ public abstract class NoteDatabase extends RoomDatabase {
             synchronized (NoteDatabase.class) { //only one thread can run code at once
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            NoteDatabase.class, "Notes").build();
+                            NoteDatabase.class, "Notes").fallbackToDestructiveMigration().build();
                 }
             }
         }

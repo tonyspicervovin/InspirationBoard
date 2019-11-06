@@ -16,9 +16,9 @@
         android:layout_marginTop="23dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginBottom="57dp"
         android:src="@android:drawable/ic_menu_camera"
-        app:layout_constraintBottom_toTopOf="@+id/show_image"
+        app:layout_constraintBottom_toTopOf="@+id/image_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,36 +35,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/capture_image" />
+        app:layout_constraintTop_toBottomOf="@+id/capture_image"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/add_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginEnd="193dp"
-        android:layout_marginRight="193dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginBottom="77dp"
         android:text="add it "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/show_image"
         app:layout_constraintStart_toStartOf="@+id/image_thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/capture_image" />
+        app:layout_constraintTop_toBottomOf="@+id/capture_image"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/show_image"
-        android:layout_width="85dp"
-        android:layout_height="172dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="111dp"
-        android:src="@android:drawable/arrow_up_float"
+    <EditText
+        android:id="@+id/image_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="125dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Image Title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_image_button"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/image_thumbnail"
         app:layout_constraintTop_toBottomOf="@+id/capture_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

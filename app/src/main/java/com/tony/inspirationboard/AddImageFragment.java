@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Environment;
@@ -19,12 +20,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,17 +40,17 @@ public class AddImageFragment extends Fragment {
     private static final String TAG = "IMAGE_FRAGMENT";
 
 
-    private ImageView showImage;
-    private NoteRecord noteRecord;
-    private String mCurrentImagePath;
 
-    private List<ImageButton> mImageButtons;
+    private String mCurrentImagePath = "nothing";
+
+    private NoteRecord noteRecord;
 
     private InspirationViewModel inspirationViewModel;
     private OnNoteAddedListener newNoteListener;
 
     private ImageButton captureImage;
-    private EditText hashtag;
+    private EditText imageTitle;
+    private EditText imageThumbnail;
     private Button addImageButton;
 
     private static final String BUNDLE_KEY_MOST_RECENT_FILE_PATH = "bundle key most recent path";
@@ -75,15 +78,16 @@ public class AddImageFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_add_image, container, false);
 
         addImageButton = view.findViewById(R.id.add_image_button);
-        hashtag = view.findViewById(R.id.image_thumbnail);
+        imageThumbnail = view.findViewById(R.id.image_thumbnail);
+        imageTitle = view.findViewById(R.id.image_title);
         captureImage = view.findViewById(R.id.capture_image);
-        showImage = view.findViewById(R.id.show_image);
+
 
 
 
@@ -111,9 +115,31 @@ public class AddImageFragment extends Fragment {
                         Log.e(TAG, "Image file is null");
                     }
                 }
-                loadImage();
+
             }
 
+        });
+        addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inspirationViewModel = ViewModelProviders.of(getActivity()).get(InspirationViewModel.class);
+
+                String title = imageTitle.getText().toString();
+                String thumbnail = imageThumbnail.getText().toString();
+                String filepath = mCurrentImagePath;
+                if (title.isEmpty() || thumbnail.isEmpty()) {
+                    Toast.makeText(AddImageFragment.this.getContext(), "Enter a thumbnail and title, and make sure to take a picture", Toast.LENGTH_LONG).show();
+                    //if either is empty ask user for input
+                }
+                NoteRecord aNote = new NoteRecord(title, thumbnail, filepath);
+                inspirationViewModel.insert(aNote);
+                newNoteListener.onNoteAdded(aNote);
+                newNoteListener.onNoteAdded(noteRecord);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+
+
+            }
         });
 
         return view;
@@ -139,7 +165,7 @@ public class AddImageFragment extends Fragment {
             Log.d(TAG, "onActivityResult for request code " + requestCode +
                     " and current path " + mCurrentImagePath
             );
-
+            loadImage();
         }
     }
     private void loadImage() {

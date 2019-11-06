@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.List;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteViewHolder> {
@@ -67,12 +71,15 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         private final TextView noteTitle;
         private final TextView noteContent;
         private final ImageButton deleteButton;
+        private final ImageView imageView;
+
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             noteTitle = itemView.findViewById(R.id.title_tag);
             noteContent = itemView.findViewById(R.id.content_tag);
             deleteButton = itemView.findViewById(R.id.delete_button);
+            imageView = itemView.findViewById(R.id.imageView);
 
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +104,15 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
             } else {
                 noteTitle.setText(note.getTitle());
                 noteContent.setText(note.getContent());
+                if (note.getFilePath() != "nothing") {
+                    String path = note.getFilePath();
+                    Picasso.get()
+                            .load(new File(path))
+                            .error(android.R.drawable.stat_notify_error) // built in error icon
+                            .fit()
+                            .centerCrop()
+                            .into(imageView);
+                }
             }
         }
     }

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements  AddNoteFragment.
 
     @Override
     public void onNoteAdded(NoteRecord noteRecord) {
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         NoteListFragment mainFragment = (NoteListFragment) fm.findFragmentByTag(TAG_MAIN_FRAGMENT);

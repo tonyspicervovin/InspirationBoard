@@ -31,7 +31,7 @@ public class AddNoteFragment extends Fragment {
 
     private NoteRecord noteRecord;
 
-
+    private String filepath;
 
     private EditText noteTitle;
     private EditText noteContent;
@@ -90,7 +90,8 @@ public class AddNoteFragment extends Fragment {
                     Toast.makeText(AddNoteFragment.this.getContext(), "Enter a title and note", Toast.LENGTH_LONG).show();
                     //if either is empty ask user for input
                 }
-                NoteRecord aNote = new NoteRecord(title,content);
+                filepath = "nothing";
+                NoteRecord aNote = new NoteRecord(title,content, filepath);
                 inspirationViewModel.insert(aNote);
                 newNoteListener.onNoteAdded(noteRecord); // notifies activity to fragments can be swapped
                 FragmentManager fm = getActivity().getSupportFragmentManager();

@@ -2,8 +2,9 @@ package com.tony.inspirationboard;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
+import androidx.room.RoomDatabase;
 
 
 @Entity
@@ -14,12 +15,22 @@ public class NoteRecord {
 
     private String content;
 
+    private String filePath;
 
 
+    @Override
+    public String toString() {
+        return "NoteRecord{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", filePath='" + filePath + '\'' +
+                '}';
+    }
 
-    public NoteRecord(@NonNull String title, String content) {
+    public NoteRecord(@NonNull String title, String content, String filePath) {
         this.title = title;
         this.content = content;
+        this.filePath = filePath;
 
 
 
@@ -42,17 +53,9 @@ public class NoteRecord {
         this.content = content;
     }
 
-    // public String getImagePath() { return imagePath;}
+    public String getFilePath() { return filePath;}
 
-    // public void setImagePath(String imagePath) {this.imagePath = imagePath; }
+    public void setFilePath(String filePath) {this.filePath = filePath; }
 
 
-
-    @Override
-    public String toString() {
-        return "NoteRecord{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\''
-               ;
-    }
 }
