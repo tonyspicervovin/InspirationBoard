@@ -18,12 +18,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class AddImageFragment extends Fragment {
@@ -32,9 +37,11 @@ public class AddImageFragment extends Fragment {
     private static final String TAG = "IMAGE_FRAGMENT";
 
 
-
+    private ImageView showImage;
     private NoteRecord noteRecord;
     private String mCurrentImagePath;
+
+    private List<ImageButton> mImageButtons;
 
     private InspirationViewModel inspirationViewModel;
     private OnNoteAddedListener newNoteListener;
@@ -76,6 +83,10 @@ public class AddImageFragment extends Fragment {
         addImageButton = view.findViewById(R.id.add_image_button);
         hashtag = view.findViewById(R.id.image_thumbnail);
         captureImage = view.findViewById(R.id.capture_image);
+        showImage = view.findViewById(R.id.show_image);
+
+
+
 
         captureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,18 +132,39 @@ public class AddImageFragment extends Fragment {
         return imageFile;
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == -1) { // result ok
+            Log.d(TAG, "onActivityResult for request code " + requestCode +
+                    " and current path " + mCurrentImagePath
+            );
+
+        }
+    }
     private void loadImage() {
-        Log.d(TAG, mCurrentImagePath);
+
+
+
         if (mCurrentImagePath != null && !mCurrentImagePath.isEmpty()) {
+            String path = mCurrentImagePath;
             Log.d(TAG, "trying to load image");
             Picasso.get()
-                    .load(new File(mCurrentImagePath))
+                    .load(new File(path))
                     .error(android.R.drawable.stat_notify_error) // built in error icon
                     .fit()
                     .centerCrop()
-                    .into(captureImage);
+                    .into(captureImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
 
+                        }
 
+                        @Override
+                        public void onError(Exception e) {
+                            Log.d(TAG, e.toString());
+                        }
+                    });
 
         }
 

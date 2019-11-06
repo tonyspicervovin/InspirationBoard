@@ -21,6 +21,8 @@ public class NoteRecord {
         this.title = title;
         this.content = content;
 
+
+
     }
 
     @NonNull
@@ -40,13 +42,17 @@ public class NoteRecord {
         this.content = content;
     }
 
+    // public String getImagePath() { return imagePath;}
+
+    // public void setImagePath(String imagePath) {this.imagePath = imagePath; }
+
 
 
     @Override
     public String toString() {
         return "NoteRecord{" +
                 "title='" + title + '\'' +
-                ", content='" + content
+                ", content='" + content + '\''
                ;
     }
 }
