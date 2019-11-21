@@ -22,8 +22,11 @@ public interface InspirationDAO {
     @Delete
     void delete(NoteRecord... nr);
 
+    @Query("SELECT * FROM NOTERECORD WhERE title like :search or content like :search")
+    List<NoteRecord> getMatchingNotes(String search);
+
     @Query("SELECT * FROM NoteRecord WHERE title = :title LIMIT 1")
-    LiveData<NoteRecord> getNoteForTitle(String title);
+    List<NoteRecord> getNoteForTitle(String title);
 
     @Query("SELECT * FROM NoteRecord")
     LiveData<List<NoteRecord>> getAllNotes();

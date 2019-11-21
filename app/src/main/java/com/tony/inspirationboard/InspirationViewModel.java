@@ -1,6 +1,7 @@
 package com.tony.inspirationboard;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,9 +11,11 @@ import java.util.List;
 
 public class InspirationViewModel extends AndroidViewModel {
 
+    private static final String TAG = "Inspiration_View_Model" ;
     private NoteRepository repository;
 
     private LiveData<List<NoteRecord>> allRecords;
+    private List<NoteRecord> matchingRecords;
     //caching copy of results
 
     public InspirationViewModel(@NonNull Application application) {
@@ -24,9 +27,7 @@ public class InspirationViewModel extends AndroidViewModel {
 
     public LiveData<List<NoteRecord>> getAllRecords() {return allRecords;}
 
-    public LiveData<NoteRecord> getRecordForTitle(String title) {
-        return repository.getRecordForTitle(title);
-    }
+
 
     public void insert(NoteRecord record) {repository.insert(record);}
 
@@ -34,4 +35,9 @@ public class InspirationViewModel extends AndroidViewModel {
 
     public void delete(NoteRecord record) {repository.delete(record);}
 
+    public List<NoteRecord> getMatchingNotes(String search) {
+        matchingRecords = repository.getMatchingNotes(search);
+        return matchingRecords;
+
+    }
 }

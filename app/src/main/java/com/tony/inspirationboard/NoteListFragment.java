@@ -1,9 +1,12 @@
 package com.tony.inspirationboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,14 +15,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.ListIterator;
 
 
 public class NoteListFragment extends Fragment implements NoteListAdapter.ListEventListener {
@@ -27,11 +35,16 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
 
     private ImageButton addNote;
     private ImageButton addPicture;
+    private EditText searchNotes;
+
     private InspirationViewModel mInspirationModel;
 
     private static final String TAG = "NOTE_LIST_FRAGMENT";
 
+
+
     private List<NoteRecord> mNotes;
+    private List<NoteRecord> mChangeNotes;
     private NoteListAdapter noteListAdapter;
 
 
@@ -78,7 +91,7 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.note_list);
+        final RecyclerView recyclerView = view.findViewById(R.id.note_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
         noteListAdapter = new NoteListAdapter(this.getContext(), this);
@@ -86,6 +99,7 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
         recyclerView.setAdapter(noteListAdapter);
 
         addPicture = view.findViewById(R.id.addImageNote);
+        searchNotes = view.findViewById(R.id.searchNotes);
 
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +113,35 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
 
             }
         });
+
+        searchNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                final InspirationViewModel inspirationViewModel = ViewModelProviders.of(getActivity()).get(InspirationViewModel.class);
+
+                String search = editable.toString();
+
+                mNotes = inspirationViewModel.getMatchingNotes(search);
+                noteListAdapter.setNotes(mNotes);
+                noteListAdapter.notifyDataSetChanged();
+
+
+
+
+            }
+        });
+
+
 
         addNote = view.findViewById(R.id.addNote);
         addNote.setOnClickListener(new View.OnClickListener() {

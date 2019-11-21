@@ -35,6 +35,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         this.mListener = eventListener;
     }
 
+
     void setNotes(List<NoteRecord> notes) {
         this.mNotes = notes;
         notifyDataSetChanged();
@@ -91,6 +92,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
 
         }
+
 
         void bind(NoteRecord note) {
 
