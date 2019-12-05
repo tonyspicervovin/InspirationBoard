@@ -15,7 +15,7 @@ public class InspirationViewModel extends AndroidViewModel {
     private NoteRepository repository;
 
     private LiveData<List<NoteRecord>> allRecords;
-    private List<NoteRecord> matchingRecords;
+    private LiveData<List<NoteRecord>> matchingRecords;
     //caching copy of results
 
     public InspirationViewModel(@NonNull Application application) {
@@ -25,7 +25,9 @@ public class InspirationViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<NoteRecord>> getAllRecords() {return allRecords;}
+    public LiveData<List<NoteRecord>> getAllRecords() {
+        allRecords = repository.getAllRecords();
+        return allRecords;}
 
 
 
@@ -35,7 +37,7 @@ public class InspirationViewModel extends AndroidViewModel {
 
     public void delete(NoteRecord record) {repository.delete(record);}
 
-    public List<NoteRecord> getMatchingNotes(String search) {
+    public LiveData<List<NoteRecord>> getMatchingNotes(String search) {
         matchingRecords = repository.getMatchingNotes(search);
         return matchingRecords;
 

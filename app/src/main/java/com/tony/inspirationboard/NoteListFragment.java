@@ -130,10 +130,29 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.ListEv
                 final InspirationViewModel inspirationViewModel = ViewModelProviders.of(getActivity()).get(InspirationViewModel.class);
 
                 String search = editable.toString();
+                Log.d(TAG, "Editable is " + search);
 
-                mNotes = inspirationViewModel.getMatchingNotes(search);
-                noteListAdapter.setNotes(mNotes);
-                noteListAdapter.notifyDataSetChanged();
+                inspirationViewModel.getMatchingNotes(search).observe(getActivity(), new Observer<List<NoteRecord>>() {
+                    @Override
+                    public void onChanged(List<NoteRecord> noteRecords) {
+                        noteListAdapter.setNotes(noteRecords);
+                        noteListAdapter.notifyDataSetChanged();
+
+                    }
+                });
+
+                if(search.equals("")){
+                    Log.d(TAG, "It's empty");
+                    inspirationViewModel.getAllRecords().observe(getActivity(), new Observer<List<NoteRecord>>() {
+                        @Override
+                        public void onChanged(List<NoteRecord> noteRecords) {
+                            noteListAdapter.setNotes(noteRecords);
+                            noteListAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+
 
 
 

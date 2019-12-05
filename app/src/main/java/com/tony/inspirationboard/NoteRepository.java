@@ -69,6 +69,6 @@ public class NoteRepository {
     public LiveData<List<NoteRecord>> getAllRecords() {
         return inspirationDAO.getAllNotes();
     }
-    public List<NoteRecord> getMatchingNotes(String search) { return inspirationDAO.getMatchingNotes(search);}
+    public LiveData<List<NoteRecord>> getMatchingNotes(String search) { return inspirationDAO.getMatchingNotes(search);}
 
 }
